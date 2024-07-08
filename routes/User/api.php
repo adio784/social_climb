@@ -34,7 +34,7 @@ Route::post('/password-reset', [AuthController::class, 'createPasswordReset'])->
 Route::post('/complete-password-reset', [AuthController::class, 'completeResetPassword'])->name('complete-password-reset');
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('log-out');
-    Route::get('/delete-account', [AuthController::class, 'deleteAccount'])->name('delete-account');
+    Route::post('/delete-account', [AuthController::class, 'deleteAccount'])->name('delete-account');
 
     Route::get('/wallet', [AuthController::class, 'wallet'])->name('wallet-ballance');
     Route::get('/account-details', [AuthController::class, 'accountdetails'])->name('account-details');

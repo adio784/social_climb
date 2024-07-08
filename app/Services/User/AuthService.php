@@ -37,19 +37,19 @@ class AuthService
     {
         try {
 
-            $ran = $data['phone'].random_int(1000000000, 9999999999);
-            $name = $data['first_name'] .' '. $data['last_name'];
+            $ran = $data['phone'] . random_int(1000000000, 9999999999);
+            $name = $data['first_name'] . ' ' . $data['last_name'];
 
             $virtualAccData = [
-                "accountReference"=> $ran,
-                "accountName"=> $name,
-                "currencyCode"=> "NGN",
-                "contractCode"=> "0616331411",
-                "customerEmail"=> $data['email'],
-                "bvn"=> "22318673488",
-                "customerName"=> $name,
-                "getAllAvailableBanks"=> false,
-                "preferredBanks"=> ["035"]
+                "accountReference" => $ran,
+                "accountName" => $name,
+                "currencyCode" => "NGN",
+                "contractCode" => "0616331411",
+                "customerEmail" => $data['email'],
+                "bvn" => "22318673488",
+                "customerName" => $name,
+                "getAllAvailableBanks" => false,
+                "preferredBanks" => ["035"]
             ];
             $dvaResponse = $this->createVirtualAcc($virtualAccData);
             // return $dvaResponse->requestSuccessful;
@@ -64,12 +64,10 @@ class AuthService
                     'bank_name' => $accountDetails->bankName,
                 ]);
 
-                return $this->successResponse("User registered successfully. Please check your email to verify your account.", $dvaResponse);
-
+                return $this->successResponse("User registered successfully. Please check your email to verify your account.", $user);
             }
 
             return $this->errorResponse("Failed to create virtual account.", $dvaResponse);
-
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
             Log::error($ex->getTraceAsString());
@@ -158,7 +156,6 @@ class AuthService
             //     return $this->errorResponse($ex->getMessage());
             // }
         }
-
     }
 
 
