@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AirtimeController;
+use App\Http\Controllers\BillController;
+use App\Http\Controllers\CableController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\MonnifyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaystackController;
@@ -54,5 +58,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products/{id}', [ProductController::class, 'getProductById'])->name('products.getbyid');
     Route::put('/products/{id}', [ProductController::class, 'updateProduct'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'deleteProduct'])->name('products.delete');
+
+    // VTU Routes
+    Route::post('/buy-airtime', [AirtimeController::class, 'createVtpassAirtime'])->name('buy-airtime');
+    Route::post('/buy-data', [DataController::class, 'createVtpassData'])->name('buy-data');
+    Route::post('/buy-bill', [BillController::class, 'createVtpassBill'])->name('buy-bill');
+    Route::post('/buy-cable', [CableController::class, 'createVtpassCable'])->name('buy-cable');
+    Route::post('/validate', [BillController::class, 'validateId'])->name('validate');
 
 });
