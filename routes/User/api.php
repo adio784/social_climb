@@ -5,6 +5,7 @@ use App\Http\Controllers\BillController;
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\MonnifyController;
+use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\ProductController;
@@ -60,6 +61,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/products/{id}', [ProductController::class, 'deleteProduct'])->name('products.delete');
 
     // VTU Routes
+    Route::get('/get-data-plans/{id}', [DataController::class, 'getplan'])->name('data.plans');
+    Route::get('/get-bill-plans/{id}', [BillController::class, 'getplan'])->name('bill.plans');
+    Route::get('/get-cable-plans/{id}', [CableController::class, 'getplan'])->name('data.plans');
+
+    Route::get('/get-networks', [NetworkController::class, 'getNetwork'])->name('networks');
+    Route::get('/get-bill', [BillController::class, 'getBills'])->name('bill');
+    Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
+
     Route::post('/buy-airtime', [AirtimeController::class, 'createVtpassAirtime'])->name('buy-airtime');
     Route::post('/buy-data', [DataController::class, 'createVtpassData'])->name('buy-data');
     Route::post('/buy-bill', [BillController::class, 'createVtpassBill'])->name('buy-bill');

@@ -20,6 +20,16 @@ class BillController extends Controller
                                 protected BillServices $billServices, protected DiscoServices $discoServices)
     {}
 
+    public function getBills()
+    {
+        return $this->discoServices->allDisco();
+    }
+
+    public function getplan($id)
+    {
+        return $this->billServices->getBill($id);
+    }
+
     public function createVtpassBill(Request $request)
     {
         try {

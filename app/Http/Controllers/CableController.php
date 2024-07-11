@@ -20,6 +20,16 @@ class CableController extends Controller
                                 protected CableServices $cableServices, protected CabletvServices $cabletvServices)
     {}
 
+    public function getCables()
+    {
+        return $this->cabletvServices->allCabletv();
+    }
+
+    public function getplan($id)
+    {
+        return $this->cableServices->getCable($id);
+    }
+
     public function createVtpassCable(Request $request)
     {
         try {

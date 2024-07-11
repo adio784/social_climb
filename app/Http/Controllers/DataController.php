@@ -19,6 +19,11 @@ class DataController extends Controller
                                 protected DataServices $dataServices)
     {}
 
+    public function getplan($id)
+    {
+        return $this->dataServices->allData($id);
+    }
+
     public function createVtpassData(Request $request)
     {
         try {
