@@ -49,8 +49,7 @@ class BillController extends Controller
             $meterNo    = $request->meterNumber;
             $billerName = $request->billerName;
             $meterType  = $request->meterType;
-            // $disco      = $this->discoServices->getDiscoByName($billerName);
-            $amount     = $request->amount;//$this->billServices->getBill($disco->id)->plan_amount;
+            $amount     = $request->amount;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;

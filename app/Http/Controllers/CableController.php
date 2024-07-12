@@ -41,7 +41,6 @@ class CableController extends Controller
                 'cableName'     => 'required|string',
                 'cablePlan'     => 'required|string',
                 'cableNumber'   => 'required|numeric',
-                'amount'        => 'required|string',
                 'phone'         => 'required|numeric'
             ]);
 
@@ -51,7 +50,7 @@ class CableController extends Controller
             $iucNumber  = $request->cableNumber;
             $cableName  = $request->cableName;
             $cableTv    = $this->cabletvServices->getCabletvByName($cableName);
-            $amount     = $request->amount;//$this->cableServices->getCable($cableTv->id)->plan_amount;
+            $amount     = $this->cableServices->getACable($cableTv->id, $planId)->plan_amount;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;

@@ -16,6 +16,11 @@ class CableServices
         return Cable::where('cable_id', $id)->get();
     }
 
+    public function getACable($id, $planId)
+    {
+        return Cable::where('cable_id', $id)->where('plan_code', $planId)->first();
+    }
+
     public function createCable(array $Details)
     {
         return Cable::create($Details);

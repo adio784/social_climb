@@ -16,7 +16,8 @@ class AirtimeController extends Controller
     use ResponseTrait;
 
     public function __construct(protected VtuServices $vtuService,
-                                protected AuthService $authService, protected HistoryServices $historyServices)
+                                protected AuthService $authService,
+                                protected HistoryServices $historyServices)
     {}
 
     public function createVtpassAirtime(Request $request)

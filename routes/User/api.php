@@ -78,5 +78,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/buy-cable', [CableController::class, 'createVtpassCable'])->name('buy-cable');
     Route::post('/validate', [BillController::class, 'validateId'])->name('validate');
     Route::post('/callback', [WebhookController::class, 'handleWebhook'])->name('callback');
+    Route::post('/requery/{id}', [WebhookController::class, 'requery'])->name('requery');
 
 });

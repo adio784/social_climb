@@ -6,6 +6,7 @@ use App\Services\DataServices;
 use Illuminate\Support\Facades\Log;
 use App\Services\User\AuthService;
 use App\Services\HistoryServices;
+use App\Services\NetworkServices;
 use App\Traits\ResponseTrait;
 use App\Services\VtuServices;
 use Illuminate\Http\Request;
@@ -16,12 +17,12 @@ class DataController extends Controller
     use ResponseTrait;
     public function __construct(protected VtuServices $vtuService,
                                 protected AuthService $authService, protected HistoryServices $historyServices,
-                                protected DataServices $dataServices)
+                                protected DataServices $dataServices, protected NetworkServices $networkServices)
     {}
 
     public function getplan($id)
     {
-        return $this->dataServices->getData($id);
+        return $this->dataServices->getDataPlans($id);
     }
 
     public function createVtpassData(Request $request)
@@ -31,18 +32,18 @@ class DataController extends Controller
 
             $request->validate([
                 'plan_id' => 'required|string',
-                'amount'  => 'required|numeric',
                 'network' => 'required|string',
                 'phone'   => 'required|numeric'
             ]);
 
             $requestID  = date('YmdHi').rand(99, 9999999);
-            $planId     = $request->plan_id;
             $dataType   = $request->type;
             $phone      = $request->phone;
+            $ntk        = $this->networkServices->getNetworkByName($request->network);
             $network    = $request->network;
-            // $data       = $this->dataServices->getData($network);
-            $amount     = $request->amount;//$data->plan_price;
+            $data       = $this->dataServices->getData($ntk->id, $request->plan_id);
+            $amount     = $data->plan_price;
+            $planId     = $data->vtpass_planid;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;

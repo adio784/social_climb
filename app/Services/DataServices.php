@@ -11,7 +11,12 @@ class DataServices
         return Data::all();
     }
 
-    public function getData($id)
+    public function getData($id, $planId)
+    {
+        return Data::where('network', $id)->where('id', $planId)->first();
+    }
+
+    public function getDataPlans($id)
     {
         return Data::where('network', $id)->get();
     }

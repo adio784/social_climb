@@ -33,6 +33,18 @@ class VtuServices
         return $response;
     }
 
+    public function requery(array $Details)
+    {
+        $response = Http::withBasicAuth(
+            'ayotunde@zuuroo.com',
+            'Oyenike1.'
+            )->post(
+                'https://sandbox.vtpass.com/api/requery',
+                $Details
+            );
+        return $response;
+    }
+
 
     public function handleWebhook(array $Details)
     {

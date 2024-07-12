@@ -27,6 +27,11 @@ class NetworkServices
         return Network::whereId($id)->first();
     }
 
+    public function getNetworkByName($id)
+    {
+        return Network::where('network_code', $id)->first();
+    }
+
     public function updateNetwork($id, array $Details)
     {
         return Network::whereId($id, )->update($Details);

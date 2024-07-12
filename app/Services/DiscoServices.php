@@ -18,7 +18,7 @@ class DiscoServices
 
     public function getDiscoByName($name)
     {
-        return Disco::where('name', $name)->first();
+        return Disco::where('biller_code', $name)->first();
     }
 
     public function createDisco(array $Details)
