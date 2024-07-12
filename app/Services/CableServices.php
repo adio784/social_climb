@@ -13,7 +13,7 @@ class CableServices
 
     public function getCable($id)
     {
-        return Cable::whereId($id)->first();
+        return Cable::where('cable_id', $id)->get();
     }
 
     public function createCable(array $Details)

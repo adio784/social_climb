@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('/cable-plans', [CableController::class, 'getVtPlans']);
+Route::get('/bill-plans', [BillController::class, 'getVtPlans']);
+
 Route::post('/create-account', [PaystackController::class, 'createdAccount']);
 Route::post('/webhook/paystack', [PaystackController::class, 'handle']);
 Route::post('/webhook/monnify', [MonnifyController::class, 'handle']);
@@ -63,7 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // VTU Routes
     Route::get('/get-data-plans/{id}', [DataController::class, 'getplan'])->name('data.plans');
-    Route::get('/get-bill-plans/{id}', [BillController::class, 'getplan'])->name('bill.plans');
     Route::get('/get-cable-plans/{id}', [CableController::class, 'getplan'])->name('cable.plans');
 
     Route::get('/get-networks', [NetworkController::class, 'getNetwork'])->name('networks');

@@ -14,6 +14,7 @@ class WebhookController extends Controller
     }
     public function handleWebhook(Request $request)
     {
+        return $request->all();
         return $this->vtpassWebhookServices->verifyWebhook($request->all());
     }
 }

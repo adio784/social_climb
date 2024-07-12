@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Services\BillServices;
 use App\Services\DiscoServices;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,7 @@ use App\Services\HistoryServices;
 use App\Traits\ResponseTrait;
 use App\Services\VtuServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class BillController extends Controller
 {
@@ -118,5 +120,21 @@ class BillController extends Controller
         } catch (\Exception $ex) {
             return $this->errorResponse($ex->getMessage(), "Something went wrong", 401);
         }
+    }
+
+    public function getVtPlans()
+    {
+        $get = Http::get('https://sandbox.vtpass.com/api/service-variations?serviceID=showmax');
+        $response = json_decode($get);
+        foreach ($response->content->varations as $content) {
+            Bill::create([
+                'disco_id' => 4,
+                'plan_name' => $content->name,
+                'plan_code' => $content->variation_code,
+                'plan_amount' => $content->variation_amount,
+                'is_active' => 1
+            ]);
+        }
+        return $response;
     }
 }

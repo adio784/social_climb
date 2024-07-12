@@ -21,7 +21,7 @@ class DataController extends Controller
 
     public function getplan($id)
     {
-        return $this->dataServices->allData($id);
+        return $this->dataServices->getData($id);
     }
 
     public function createVtpassData(Request $request)

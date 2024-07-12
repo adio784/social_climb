@@ -13,7 +13,7 @@ class DataServices
 
     public function getData($id)
     {
-        return Data::where('network', $id)->first();
+        return Data::where('network', $id)->get();
     }
 
     public function createData(array $Details)
