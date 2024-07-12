@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('smart_card_number');
             $table->integer('balance_before');
             $table->integer('balance_after');
-            $table->string('customer_name');
             $table->boolean('refund')->default(false);
             $table->string('status')->default('processing');
             $table->timestamps();

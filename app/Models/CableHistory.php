@@ -18,7 +18,6 @@ class CableHistory extends Model
         'smart_card_number',
         'balance_before',
         'balance_after',
-        'customer_name',
         'refund',
         'status',
     ];

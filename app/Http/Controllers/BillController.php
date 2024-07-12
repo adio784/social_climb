@@ -35,12 +35,11 @@ class BillController extends Controller
         try {
             date_default_timezone_set("Africa/Lagos");
             $request->validate([
-                'billerName'            => 'required|string',
-                'meterType'             => 'required|string',
-                'meterNumber'           => 'required|numeric',
-                'amount'                => 'required|numeric',
-                'customerName'          => 'required',
-                'customerPhoneNumber'   => 'required|numeric'
+                'billerName'    => 'required|string',
+                'meterType'     => 'required|string',
+                'meterNumber'   => 'required|numeric',
+                'amount'        => 'required|numeric',
+                'phone'         => 'required|numeric'
             ]);
 
             $requestID  = date('YmdHi').rand(99, 9999999);
@@ -48,16 +47,16 @@ class BillController extends Controller
             $meterNo    = $request->meterNumber;
             $billerName = $request->billerName;
             $meterType  = $request->meterType;
-            $disco      = $this->discoServices->getDiscoByName($billerName);
-            $amount     = $this->billServices->getBill($disco->id)->plan_amount;
+            // $disco      = $this->discoServices->getDiscoByName($billerName);
+            $amount     = $request->amount;//$this->billServices->getBill($disco->id)->plan_amount;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;
             $Details = [
                 'request_id'        => $requestID,
                 'serviceID'         => $billerName,//'eko-electric',
-                'variation_code'    => $meterType,//'prepaid',
                 'billersCode'       => $meterNo,
+                'variation_code'    => $meterType,//'prepaid',
                 'amount'            => $amount,
                 'phone'             => $phone
             ];
@@ -69,11 +68,12 @@ class BillController extends Controller
             }else{
 
                 $response = json_decode($this->vtuService->makePayment($Details));
+                // return $response;
                 if ( !is_null($response)) {
                     $HDetails = [
                         'reference'     => $response->content->transactions->transactionId,
                         'user_id'       => $userId,
-                        'disco_id'      => $disco->id,
+                        'disco_id'      => $billerName,//$disco->id,
                         'bill_amount'   => $amount,
                         'paid_amount'   => $amount,
                         'balance_bfo'   => $req_bal_process,
@@ -87,7 +87,7 @@ class BillController extends Controller
                         'refund'        => 0,
                         'status'        => $response->content->transactions->status,
                     ];
-                    $this->historyServices->createAirtimeHistory($HDetails);
+                    $this->historyServices->createBillHistory($HDetails);
                     $this->authService->updateProfile($userId, ['wallet_balance' => $bal_after]);
                     return $this->successResponse("Successful");
                 }
@@ -103,15 +103,15 @@ class BillController extends Controller
     {
         try {
             $request->validate([
-                'ctr' => 'required',
-                'billerName' => 'required',
-                'meterType' => 'required'
+                'serviceNumber' => 'required',
+                'serviceName'   => 'required',
+                'serviceType'   => 'sometimes|nullable|string',
             ]);
 
             $Details = [
-                'billersCode'   => $request->ctr,//1111111111111,
-                'serviceID'     => $request->billerName,//'eko-electric',
-                'type'          => $request->meterType//'prepaid'
+                'billersCode'   => $request->serviceNumber,
+                'serviceID'     => $request->serviceName,
+                'type'          => $request->serviceType
             ];
             $response = json_decode($this->vtuService->validate($Details));
             return $this->successResponse("Successful", $response->content);

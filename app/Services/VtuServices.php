@@ -10,10 +10,11 @@ class VtuServices
     public function makePayment(array $Details)
     {
         $response = Http::withBasicAuth(
-            'moyofolatimothy@gmail.com',
-            'Damola24..'
+            'ayotunde@zuuroo.com',
+            'Oyenike1.'
             )->post(
-                'https://api-service.vtpass.com/api/pay',
+                'https://sandbox.vtpass.com/api/pay',
+                //'https://api-service.vtpass.com/api/pay',
                 $Details
             );
         return $response;
@@ -23,8 +24,8 @@ class VtuServices
     public function validate(array $Details)
     {
         $response = Http::withBasicAuth(
-            'moyofolatimothy@gmail.com',
-            'Damola24..'
+            'ayotunde@zuuroo.com',
+            'Oyenike1.'
             )->post(
                 'https://sandbox.vtpass.com/api/merchant-verify',
                 $Details
@@ -36,8 +37,8 @@ class VtuServices
     public function handleWebhook(array $Details)
     {
         $response = Http::withBasicAuth(
-            'moyofolatimothy@gmail.com',
-            'Damola24..'
+            'ayotunde@zuuroo.com',
+            'Oyenike1.'
             )->post(
                 'https://api-service.vtpass.com/api/pay',
                 $Details

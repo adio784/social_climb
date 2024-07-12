@@ -11,6 +11,7 @@ use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // VTU Routes
     Route::get('/get-data-plans/{id}', [DataController::class, 'getplan'])->name('data.plans');
     Route::get('/get-bill-plans/{id}', [BillController::class, 'getplan'])->name('bill.plans');
-    Route::get('/get-cable-plans/{id}', [CableController::class, 'getplan'])->name('data.plans');
+    Route::get('/get-cable-plans/{id}', [CableController::class, 'getplan'])->name('cable.plans');
 
     Route::get('/get-networks', [NetworkController::class, 'getNetwork'])->name('networks');
     Route::get('/get-bill', [BillController::class, 'getBills'])->name('bill');
@@ -74,5 +75,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/buy-bill', [BillController::class, 'createVtpassBill'])->name('buy-bill');
     Route::post('/buy-cable', [CableController::class, 'createVtpassCable'])->name('buy-cable');
     Route::post('/validate', [BillController::class, 'validateId'])->name('validate');
+    Route::post('/callback', [WebhookController::class, 'handleWebhook'])->name('callback');
 
 });

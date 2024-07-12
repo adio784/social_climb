@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('data_histories', function (Blueprint $table) {
             $table->id();
             $table->string('network_id');
-            $table->foreign('plan_id')->constrained('data')->onDelete('cascade');
-            $table->foreign('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('plan_id');
+            $table->integer('user_id');
             $table->string('data_type', 30)->nullable();
             $table->string('mobile_number', 30);
             $table->string('Status', 30);
@@ -27,9 +27,6 @@ return new class extends Migration
             $table->string('ident', 30);
             $table->boolean('refund')->nullable();
             $table->longText('api_response');
-            $table->foreign('network_id')->references('id')->on('vtuapp_network');
-            $table->foreign('plan_id')->references('id')->on('vtuapp_plan');
-            $table->foreign('user_id')->references('id')->on('vtuapp_customuser');
             $table->timestamps();
         });
     }

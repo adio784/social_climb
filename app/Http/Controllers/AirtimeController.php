@@ -51,6 +51,7 @@ class AirtimeController extends Controller
             }else{
 
                 $response = json_decode($this->vtuService->makePayment($Details));
+                // return $response;
                 if ( !is_null($response)) {
                     $HDetails = [
                         'user_id'           => $userId,

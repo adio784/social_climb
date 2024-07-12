@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('airtime_histories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->integer('network_id');
+            $table->string('network_id');
             $table->string('mobile_number');
             $table->string('cost_price');
             $table->string('amount_paid');

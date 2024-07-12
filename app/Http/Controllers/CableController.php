@@ -36,30 +36,28 @@ class CableController extends Controller
             date_default_timezone_set("Africa/Lagos");
 
             $request->validate([
-                'cableName'             => 'required|string',
-                'cablePlan'             => 'required|string',
-                'cableNumber'           => 'required|numeric',
-                'customerName'          => 'required|string',
-                'customerPhoneNumber'   => 'required|numeric'
+                'cableName'     => 'required|string',
+                'cablePlan'     => 'required|string',
+                'cableNumber'   => 'required|numeric',
+                'amount'        => 'required|string',
+                'phone'         => 'required|numeric'
             ]);
 
             $requestID  = date('YmdHi').rand(99, 9999999);
             $planId     = $request->cablePlan;
             $phone      = $request->phone;
-            $iucNumber  = $request->meterNumber;
-            $cableName  = $request->billerName;
+            $iucNumber  = $request->cableNumber;
+            $cableName  = $request->cableName;
             $cableTv    = $this->cabletvServices->getCabletvByName($cableName);
-            $amount     = $this->cableServices->getCable($cableTv->id)->plan_amount;
-            $variationCode = $request->variation_code;
-            $meterType  = $request->meterType;
+            $amount     = $request->amount;//$this->cableServices->getCable($cableTv->id)->plan_amount;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;
             $Details = [
                 'request_id'        => $requestID,
-                'serviceID'         => $cableName,//'eko-electric',
+                'serviceID'         => $cableName,//'gotv',
                 'billersCode'       => $iucNumber,
-                'variation_code'    => $variationCode,//'prepaid',
+                'variation_code'    => $planId, //goto-lite,
                 'amount'            => $amount,
                 'phone'             => $phone,
                 'subscription_type' => 'change'
@@ -72,20 +70,21 @@ class CableController extends Controller
             }else{
 
                 $response = json_decode($this->vtuService->makePayment($Details));
+                // return $response;
                 if ( !is_null($response)) {
                     $HDetails = [
                         'reference'     => $response->content->transactions->transactionId,
                         'user_id'       => $userId,
-                        'cable_id'      => $cableTv->id,
-                        'plan_id'       => $planId,
-                        'paid_amount'   => $amount,
-                        'balance_before'   => $req_bal_process,
-                        'balance_after'   => $bal_after,
-                        'customer_name' => $response->content->transactions->status,
+                        'cable_id'      => $cableName,
+                        'plan_id'       => 1,//$planId,
+                        'plan_amount'   => $amount,
+                        'smart_card_number' => $iucNumber,
+                        'balance_before' => $req_bal_process,
+                        'balance_after' => $bal_after,
                         'refund'        => 0,
                         'status'        => $response->content->transactions->status,
                     ];
-                    $this->historyServices->createAirtimeHistory($HDetails);
+                    $this->historyServices->createCableHistory($HDetails);
                     $this->authService->updateProfile($userId, ['wallet_balance' => $bal_after]);
                     return $this->successResponse("Successful");
                 }

@@ -30,8 +30,8 @@ class DataController extends Controller
             date_default_timezone_set("Africa/Lagos");
 
             $request->validate([
-                'plan_id' => 'required|numeric',
-                'type'    => 'required|numeric',
+                'plan_id' => 'required|string',
+                'amount'  => 'required|numeric',
                 'network' => 'required|string',
                 'phone'   => 'required|numeric'
             ]);
@@ -41,17 +41,18 @@ class DataController extends Controller
             $dataType   = $request->type;
             $phone      = $request->phone;
             $network    = $request->network;
-            $data       = $this->dataServices->getData($network);
-            $amount     = $data->plan_price;
+            // $data       = $this->dataServices->getData($network);
+            $amount     = $request->amount;//$data->plan_price;
             $userId     = $this->authService->profile()->id;
             $req_bal_process = $this->authService->wallet();
             $bal_after  = $req_bal_process - $amount;
             $Details = [
-                'request_id'=> $requestID,
-                'serviceID' => $network,
-                'plan'      => $planId,
-                'amount'    => $amount,
-                'phone'     => $phone,
+                'request_id'        => $requestID,
+                'serviceID'         => $network,
+                'variation_code'    => $planId,
+                "billersCode"       => $phone,
+                'amount'            => $amount,
+                'phone'             => $this->authService->profile()->phone,
             ];
 
             if($req_bal_process < $amount){
@@ -61,6 +62,7 @@ class DataController extends Controller
             }else{
 
                 $response = json_decode($this->vtuService->makePayment($Details));
+                // return $response;
                 if ( !is_null($response)) {
                     $HDetails = [
                         'network_id'    => $network,
@@ -78,7 +80,7 @@ class DataController extends Controller
                         'refund'        => 0,
                         'api_response'  => $response->response_description,
                     ];
-                    $this->historyServices->createAirtimeHistory($HDetails);
+                    $this->historyServices->createDataHistory($HDetails);
                     $this->authService->updateProfile($userId, ['wallet_balance' => $bal_after]);
                     return $this->successResponse("Successful");
                 }
