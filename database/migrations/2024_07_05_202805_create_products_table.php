@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('product_id')->default(0);
             $table->string('name');
             $table->string('category');
+            $table->decimal('cost_rate', 8, 2)->default(0.00);
             $table->decimal('product_rate', 8, 2)->default(0.00);
             $table->string('min');
             $table->string('max');

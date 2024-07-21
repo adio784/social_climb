@@ -8,7 +8,19 @@ class AirtimeServices
 {
     public function allAirtime()
     {
-        return Airtime::all();
+        return Airtime::join('networks', 'airtimes.network_id', 'networks.id')
+                        ->select('airtimes.*', 'networks.name as network_name')
+                        ->get();
+    }
+
+
+
+    public function getPlan($id)
+    {
+        return Airtime::join('networks', 'airtimes.network_id', 'networks.id')
+                    ->select('airtimes.*', 'networks.name as network_name')
+                    ->where('airtimes.id', $id)
+                    ->first();
     }
 
     public function getAirtime($id)

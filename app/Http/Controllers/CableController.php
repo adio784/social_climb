@@ -112,4 +112,112 @@ class CableController extends Controller
         }
         return $response;
     }
+
+    // Administrative operations ...............................
+    public function index()
+    {
+        $data = [
+            'Pricing' => $this->cableServices->allCable()
+        ];
+        return view('control.cable-plans', $data);
+    }
+
+    public function createCable()
+    {
+        $data = [
+            'Cables' => $this->getCables()
+        ];
+        return view('control.create-cable', $data);
+    }
+
+
+    public function read($id)
+    {
+        $data = [
+            'Plan'  => $this->cableServices->getPlan($id),
+            'Cables' => $this->getCables()
+        ];
+        return view('control.cableplan', $data);
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $request->validate([
+                'cable'         => 'required|numeric',
+                'plan_name'     => 'required|string',
+                'plan_code'     => 'required|string',
+                'cost_price'    => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'cable_id'      =>  $request->cable,
+                'plan_name'     =>  $request->plan_name,
+                'plan_code'     =>  $request->plan_code,
+                'cost_price'    =>  $request->cost_price,
+                'plan_amount'   =>  $request->selling_price,
+            ];
+            $this->cableServices->createCable($Data);
+            return back()->with('success', 'Record Successfully Created');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+            $planId = $request->plan_id;
+            $request->validate([
+                'cable'         => 'required|numeric',
+                'plan_name'     => 'required|string',
+                'plan_code'     => 'required|string',
+                'cost_price'    => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'cable_id'      =>  $request->cable,
+                'plan_name'     =>  $request->plan_name,
+                'plan_code'     =>  $request->plan_code,
+                'cost_price'    =>  $request->cost_price,
+                'plan_amount'   =>  $request->selling_price,
+            ];
+            $this->cableServices->updateCable($Data, $planId);
+            return back()->with('success', 'Record Successfully Updated');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+
+
+    public function delete($id)
+    {
+        try {
+            $this->cableServices->deleteCable($id);
+            return back()->with('success', 'Record Successfully Deleted !!!');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Deleting Record !!!');
+        }
+    }
+
+    public function histories()
+    {
+        $data = [
+            'Histories' => $this->historyServices->getCableHistory()
+        ];
+        return view('control.cable-histories', $data);
+    }
+
+    public function cableDetails($id)
+    {
+        $data = [
+            'History' => $this->historyServices->getCableHistoryById($id)
+        ];
+        return view('control.view-cable-details', $data);
+    }
+
 }

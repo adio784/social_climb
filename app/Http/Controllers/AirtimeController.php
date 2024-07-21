@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AirtimeServices;
 use Illuminate\Support\Facades\Log;
 use App\Services\User\AuthService;
 use App\Services\HistoryServices;
+use App\Services\NetworkServices;
 use App\Traits\ResponseTrait;
 use App\Services\VtuServices;
 use Illuminate\Http\Request;
@@ -17,8 +19,26 @@ class AirtimeController extends Controller
 
     public function __construct(protected VtuServices $vtuService,
                                 protected AuthService $authService,
+                                protected NetworkServices $networkServices,
+                                protected AirtimeServices $airtimeServices,
                                 protected HistoryServices $historyServices)
     {}
+
+    public function index()
+    {
+        $data = [
+            'Pricing' => $this->airtimeServices->allAirtime()
+        ];
+        return view('control.airtime-percentage', $data);
+    }
+
+    public function createAirtime()
+    {
+        $data = [
+            'Networks' => $this->networkServices->all()
+        ];
+        return view('control.create-airtime', $data);
+    }
 
     public function createVtpassAirtime(Request $request)
     {
@@ -80,5 +100,89 @@ class AirtimeController extends Controller
             Log::info($ex->getMessage());
             return $this->errorResponse($ex->getMessage(), "Something went wrong", 401);
         }
+    }
+
+    public function read($id)
+    {
+        $data = [
+            'Plan'  => $this->airtimeServices->getPlan($id),
+            'Networks' => $this->networkServices->all(),
+        ];
+        return view('control.airtimeperc', $data);
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $request->validate([
+                'network'       => 'required|numeric',
+                'cost_perc'     => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'network_id'    =>  $request->network,
+                'cost_perc'     =>  $request->cost_perc,
+                'percentage'    =>  $request->selling_price,
+                'share_shell_perc'=>  $request->selling_price,
+            ];
+            $this->airtimeServices->createAirtime($Data);
+            return back()->with('success', 'Record Successfully Created');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+
+            $planId = $request->plan_id;
+            $request->validate([
+                'network'       => 'required|numeric',
+                'cost_perc'     => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'network_id'    =>  $request->network,
+                'cost_perc'     =>  $request->cost_perc,
+                'percentage'    =>  $request->selling_price,
+                'share_shell_perc'=>  $request->selling_price,
+            ];
+            $this->airtimeServices->updateAirtime($Data, $planId);
+            return back()->with('success', 'Record Successfully Updated');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+
+
+    public function delete($id)
+    {
+        try {
+            $this->airtimeServices->deleteAirtime($id);
+            return back()->with('success', 'Record Successfully Deleted !!!');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Deleting Record !!!');
+        }
+    }
+
+    public function histories()
+    {
+        $data = [
+            'Histories' => $this->historyServices->getAirtimeHistory()
+        ];
+        return view('control.airtime-histories', $data);
+    }
+
+    public function airtimeDetails($id)
+    {
+        $data = [
+            'History' => $this->historyServices->getAirtimeHistoryById($id)
+        ];
+        return view('control.view-airtime-details', $data);
     }
 }

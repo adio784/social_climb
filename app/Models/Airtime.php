@@ -11,6 +11,7 @@ class Airtime extends Model
 
     protected $fillable = [
         'network_id',
+        'cost_perc',
         'percentage',
         'share_shell_perc',
         'is_active',

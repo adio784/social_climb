@@ -8,7 +8,17 @@ class BillServices
 {
     public function allBill()
     {
-        return Bill::all();
+        return Bill::join('discos', 'bills.disco_id', 'discos.id')
+                    ->select('bills.*', 'discos.name as disco_name')
+                    ->get();
+    }
+
+    public function getPlan($id)
+    {
+    return Bill::join('discos', 'bills.disco_id', 'discos.id')
+            ->select('bills.*', 'discos.name as disco_name')
+            ->where('bills.id', $id)
+            ->first();
     }
 
     public function getBill($id)

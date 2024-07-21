@@ -11,7 +11,9 @@ class PaymentService
     public function getAllPayments()
     {
 
-        return Payment::all();
+        return Payment::join('users', 'users.id', 'payments.user_id')
+                        ->select('users.username', 'payments.*')
+                        ->get();
     }
 
     public function createPayment(array $data)

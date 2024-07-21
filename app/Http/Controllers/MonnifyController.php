@@ -19,8 +19,5 @@ class MonnifyController extends Controller
         Log::info(['success in controller' => true, 'data' => $request->all()]);
         $this->monnifyService->verifyWebhook($request->all());
         return response()->json(['success' => true]);
-        Log::info(['success in controller' => true, 'data' => $request->all()]);
-        $this->monnifyService->verifyWebhook($request->all());
-        return response()->json(['success' => true]);
     }
 }

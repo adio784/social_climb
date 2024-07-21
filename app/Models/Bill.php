@@ -13,6 +13,7 @@ class Bill extends Model
         'disco_id',
         'plan_name',
         'plan_code',
+        'cost_price',
         'plan_amount',
         'is_active',
     ];

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('service');
             $table->string('quantity');
             $table->decimal('product_price', 15, 2)->default(0);
+            $table->decimal('balance_before', 15, 2)->default(0);
+            $table->decimal('balance_after', 15, 2)->default(0);
             $table->string('status');
             $table->timestamps();
         });

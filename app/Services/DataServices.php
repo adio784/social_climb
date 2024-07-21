@@ -8,7 +8,17 @@ class DataServices
 {
     public function allData()
     {
-        return Data::all();
+        return Data::join('networks', 'data.network', 'networks.id')
+                    ->select('data.*', 'networks.name as network_name')
+                    ->get();
+    }
+
+    public function getPlan($id)
+    {
+        return Data::join('networks', 'data.network', 'networks.id')
+                    ->select('data.*', 'networks.name as network_name')
+                    ->where('data.id', $id)
+                    ->first();
     }
 
     public function getData($id, $planId)

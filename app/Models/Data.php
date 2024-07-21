@@ -9,5 +9,5 @@ class Data extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['network', 'plan_size', 'plan_measure', 'plan_price', 'plan_category', 'plan_validity', 'ussd_string', 'sms_message', 'vtpass_planid'];
+    protected $fillable = ['network', 'plan_size', 'plan_measure', 'cost_price', 'plan_price', 'plan_category', 'plan_validity', 'ussd_string', 'sms_message', 'vtpass_planid'];
 }

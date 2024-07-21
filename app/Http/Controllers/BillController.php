@@ -136,4 +136,111 @@ class BillController extends Controller
         }
         return $response;
     }
+
+
+    public function index()
+    {
+        $data = [
+            'Pricing' => $this->billServices->allBill()
+        ];
+        return view('control.bill-plans', $data);
+    }
+
+    public function createBill()
+    {
+        $data = [
+            'Discos' => $this->getBills()
+        ];
+        return view('control.create-bill', $data);
+    }
+
+
+    public function read($id)
+    {
+        $data = [
+            'Plan'  => $this->billServices->getPlan($id),
+            'Discos' => $this->getBills()
+        ];
+        return view('control.billplan', $data);
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $request->validate([
+                'disco'         => 'required|numeric',
+                'plan_name'     => 'required|string',
+                'plan_code'     => 'required|string',
+                'cost_price'    => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'disco_id'      =>  $request->disco,
+                'plan_name'     =>  $request->plan_name,
+                'plan_code'     =>  $request->plan_code,
+                'cost_price'    =>  $request->cost_price,
+                'plan_amount'   =>  $request->selling_price,
+            ];
+            $this->billServices->createBill($Data);
+            return back()->with('success', 'Record Successfully Created');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+            $planId = $request->plan_id;
+            $request->validate([
+                'disco'         => 'required|numeric',
+                'plan_name'     => 'required|string',
+                'plan_code'     => 'required|string',
+                'cost_price'    => 'required|numeric',
+                'selling_price' => 'required|numeric',
+            ]);
+            $Data = [
+                'disco_id'      =>  $request->disco,
+                'plan_name'     =>  $request->plan_name,
+                'plan_code'     =>  $request->plan_code,
+                'cost_price'    =>  $request->cost_price,
+                'plan_amount'   =>  $request->selling_price,
+            ];
+            $this->billServices->updateBill($Data, $planId);
+            return back()->with('success', 'Record Successfully Updated');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Occured, Reason: ' . $e->getMessage());
+        }
+    }
+
+
+
+    public function delete($id)
+    {
+        try {
+            $this->billServices->deleteBill($id);
+            return back()->with('success', 'Record Successfully Deleted !!!');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Deleting Record !!!');
+        }
+    }
+
+    public function histories()
+    {
+        $data = [
+            'Histories' => $this->historyServices->getBillHistory()
+        ];
+        return view('control.bill-histories', $data);
+    }
+
+    public function billDetails($id)
+    {
+        $data = [
+            'History' => $this->historyServices->getBillHistoryById($id)
+        ];
+        return view('control.view-bill-details', $data);
+    }
 }

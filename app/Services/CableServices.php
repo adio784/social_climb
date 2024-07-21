@@ -8,7 +8,17 @@ class CableServices
 {
     public function allCable()
     {
-        return Cable::all();
+        return Cable::join('cable_tvs', 'cables.cable_id', 'cable_tvs.id')
+                    ->select('cables.*', 'cable_tvs.name as cable_name')
+                    ->get();
+    }
+
+    public function getPlan($id)
+    {
+        return Cable::join('cable_tvs', 'cables.cable_id', 'cable_tvs.id')
+                    ->select('cables.*', 'cable_tvs.name as cable_name')
+                    ->where('cables.id', $id)
+                    ->first();
     }
 
     public function getCable($id)

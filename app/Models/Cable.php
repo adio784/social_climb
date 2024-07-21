@@ -9,5 +9,5 @@ class Cable extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cable_id', 'plan_name', 'plan_code', 'plan_amount', 'is_active'];
+    protected $fillable = ['cable_id', 'plan_name', 'plan_code', 'cost_price', 'plan_amount', 'is_active'];
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('airtimes', function (Blueprint $table) {
             $table->id();
             $table->string('network_id');
+            $table->integer('cost_perc')->default(0);
             $table->string('percentage');
             $table->decimal('share_shell_perc', 10, 2)->default(0.00);
             $table->boolean('is_active')->default(true);

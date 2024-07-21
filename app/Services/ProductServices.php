@@ -10,6 +10,11 @@ class ProductServices
         return Product::all();
     }
 
+    public function createProduct(array $Data)
+    {
+        return Product::create($Data);
+    }
+
     public function getActiveService()
     {
         return Product::where('is_active', 1)->orderBy('id', 'desc')->get();

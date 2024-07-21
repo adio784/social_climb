@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('network');
             $table->string('plan_size');
             $table->string('plan_measure');
+            $table->decimal('cost_price', 10, 2);
             $table->decimal('plan_price', 10, 2);
             $table->string('plan_category');
             $table->string('plan_validity');

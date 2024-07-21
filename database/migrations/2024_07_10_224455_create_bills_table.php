@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('disco_id');
             $table->string('plan_name');
             $table->string('plan_code');
+            $table->decimal('cost_price', 10, 2);
             $table->string('plan_amount');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
