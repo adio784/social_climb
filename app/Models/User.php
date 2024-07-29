@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles, HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = ['id'];
     /**
@@ -43,6 +44,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function getAllPermissionsNames()
+    {
+        return $this->getAllPermissions()->pluck('name');
+    }
 
     /**
      * The attributes that should be cast.

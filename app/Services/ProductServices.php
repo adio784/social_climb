@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\Service;
 
 class ProductServices
 {
@@ -38,5 +39,15 @@ class ProductServices
     public function deleteProduct($id)
     {
         return Product::where('id', $id)->delete();
+    }
+
+    public function getServices()
+    {
+        return Service::all();
+    }
+
+    public function updateService($id, $data)
+    {
+        return Service::where('id', $id)->update($data);
     }
 }

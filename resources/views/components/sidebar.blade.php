@@ -3,7 +3,7 @@
         <li class="sidebar-title">Menu</li>
 
         <li class="sidebar-item active ">
-            <a href="index.html" class='sidebar-link'>
+            <a href="{{ route('dashboard') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Dashboard</span>
             </a>
@@ -24,6 +24,7 @@
             </ul>
         </li>
 
+        @if($permissions->contains('users'))
         {{-- History route --}}
         <li class="sidebar-item  has-sub">
             <a href="#" class='sidebar-link'>
@@ -51,6 +52,7 @@
                 </li>
             </ul>
         </li>
+        @endif
 
         {{-- Pricing route --}}
         <li class="sidebar-item  has-sub">
@@ -86,10 +88,10 @@
             </a>
             <ul class="submenu ">
                 <li class="submenu-item ">
-                    <a href="form-element-input.html">Services</a>
+                    <a href="{{ route('service.index') }}">Services</a>
                 </li>
                 <li class="submenu-item ">
-                    <a href="form-element-input-group.html">Notification</a>
+                    <a href="{{ route('notification.index') }}">Notification</a>
                 </li>
             </ul>
         </li>
@@ -102,10 +104,24 @@
         </li>
 
         <li class="sidebar-item">
-            <a href="#" class='sidebar-link'>
-                <i class="bi bi-pencil"></i>
+
+            {{-- Authentication --}}
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <a :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();"
+                                    class='sidebar-link'>
+                    <i class="bi bi-pencil"></i>
+                    <span>{{ __('Log Out') }}</span>
+                </a>
+            </form>
+
+            {{-- <a href="#" class='sidebar-link'>
+
                 <span>Logout</span>
-            </a>
+            </a> --}}
         </li>
 
     </ul>

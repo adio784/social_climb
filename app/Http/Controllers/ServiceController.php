@@ -7,6 +7,7 @@ use App\Services\GetfollowerService;
 use App\Services\ProductServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ServiceController extends Controller
 {
@@ -17,6 +18,14 @@ class ServiceController extends Controller
     {
         $this->getFollowerService = $getFollowerService;
         $this->productService = $productService;
+    }
+
+    public function index()
+    {
+        $data = [
+            'Services' => $this->productService->getServices()
+        ];
+        return view('control.all-services', $data);
     }
 
 
@@ -45,14 +54,35 @@ class ServiceController extends Controller
     public function services()
     {
         $response = $this->productService->getActiveService();
-        return response()->json(['success' => true, 'data' =>  $response ]);
+        return response()->json(['success' => true, 'data' =>  $response]);
     }
 
     public function balance()
     {
         $balance = $this->getFollowerService->balance();
 
-        return response()->json(['success' => true, 'data' =>  $balance ]);
+        return response()->json(['success' => true, 'data' =>  $balance]);
     }
 
+    public function activate($id)
+    {
+        try {
+            $this->productService->updateService($id, ['is_active'=>1]);
+            return back()->with('success', 'Record Successfully Deleted !!!');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Updating Record !!!');
+        }
+    }
+
+    public function dissable($id)
+    {
+        try {
+            $this->productService->updateService($id, ['is_active'=>0]);
+            return back()->with('success', 'Record Successfully Deleted !!!');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Updating Record !!!');
+        }
+    }
 }

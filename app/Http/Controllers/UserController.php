@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\HistoryServices;
 use App\Services\User\AuthService;
-use App\services\UserServices;
+use App\Services\UserServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,8 +31,10 @@ class UserController extends Controller
 
     public function admin(Request $request)
     {
+
         $data = [
-            'Users' => $this->userServices->allAdmins()
+            'Users' => $this->userServices->allAdmins(),
+            'Permissions' =>   Permission::all(),
         ];
         return view('control.all-admins', $data);
     }
@@ -40,6 +45,16 @@ class UserController extends Controller
             'User'  => $this->userServices->getUser($request->route('id')),
         ];
         return view('control.view-users', $data);
+    }
+
+    public function getUserPermissions(Request $request)
+    {
+        $User  = $this->userServices->getUser($request->route('id'));
+        $data = [
+            'Permissions'   => $User->permissions,
+            'User'          => $User
+        ];
+        return view('control.view-user-permissions', $data);
     }
 
     public function userHistory(Request $request)
@@ -92,7 +107,54 @@ class UserController extends Controller
     {
         $id = $request->route('id');
         $this->userServices->update($id, ['status'=>'inactive']);
-        return back()->with(['message' => 'User successfully deactivated.'], 200);
+        return back()->with(['success' => 'User successfully deactivated.'], 200);
         return response()->json(['message' => 'User successfully deactivated.'], 200);
     }
+
+    public function makeAdmin(Request $request)
+    {
+        try{
+            $id = $request->route('id');
+            $user = $this->userServices->getUser($id);
+            $user->assignRole('admin');
+            return back()->with(['success' => 'User successfully updated.'], 200);
+            return response()->json(['message' => 'User successfully deactivated.'], 200);
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Performing Operation.!!!');
+        }
+    }
+
+    public function removeAdmin(Request $request)
+    {
+        try{
+            $id = $request->route('id');
+            $user = $this->userServices->getUser($id);
+            $user->removeRole('admin');
+            return back()->with(['success' => 'User successfully updated.'], 200);
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Performing Operation.!!!');
+        }
+    }
+
+    public function userPermissions(Request $request)
+    {
+        try {
+            $request->validate([
+                'user_id'    => 'required|numeric',
+                'permissions'=> 'required|array'
+            ]);
+            $userId     = $request->user_id;
+            $user       = User::find($userId);
+            $permissions= $request->permissions;
+            // $user->givePermissionTo($permissions);
+            $user->syncPermissions($permissions);
+            return back()->with(['success' => 'Operation completed successfully...'], 200);
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return back()->with('fail', 'Error Performing Operation.!!!');
+        }
+    }
+
 }

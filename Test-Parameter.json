@@ -1,0 +1,88 @@
+Test Parameters
+08011111111
+mtn
+100
+
+
+Data
+"varations":[
+          {
+                "variation_code": "mtn-10mb-100",
+                "name": "N100 30MB - 24hrs",
+                "variation_amount": "100.00",
+                "fixedPrice": "Yes"
+          },
+          {
+                "variation_code": "mtn-50mb-200",
+                "name": "N200 100MB -24hrs",
+                "variation_amount": "200.00",
+                "fixedPrice": "Yes"
+          },
+
+
+Electricity
+1111111111111
+eko-electric
+prepaid
+1000
+
+
+
+Cable
+1212121212
+gotv
+"varations":[
+    {
+       "variation_code":"gotv-lite",
+       "name":"GOtv Lite N400",
+       "variation_amount":"400.00",
+       "fixedPrice":"Yes"
+    },
+    {
+       "variation_code":"gotv-value",
+       "name":"GOtv value N1250",
+       "variation_amount":"1250.00",
+       "fixedPrice":"Yes"
+    },
+    ...
+ ]
+
+
+
+
+
+{
+  "code": "000",
+  "content": {
+    "transactions": {
+      "status": "delivered",
+      "product_name": "MTN Airtime VTU",
+      "unique_element": "08011111111",
+      "unit_price": 100,
+      "quantity": 1,
+      "service_verification": null,
+      "channel": "api",
+      "commission": 4,
+      "total_amount": 96.5,
+      "discount": null,
+      "type": "Airtime Recharge",
+      "email": "ayotunde@zuuroo.com",
+      "phone": "08058863371",
+      "name": null,
+      "convinience_fee": 0,
+      "amount": 100,
+      "platform": "api",
+      "method": "api",
+      "transactionId": "17207689097592394472250237"
+    }
+  },
+  "response_description": "TRANSACTION SUCCESSFUL",
+  "requestId": "2024071208219776895",
+  "amount": "100.00",
+  "transaction_date": {
+    "date": "2024-07-12 08:21:49.000000",
+    "timezone_type": 3,
+    "timezone": "Africa/Lagos"
+  },
+  "purchased_code": ""
+}

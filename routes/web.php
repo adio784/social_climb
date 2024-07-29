@@ -3,11 +3,14 @@
 use App\Http\Controllers\AirtimeController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,17 +26,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Auth/Login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+
+Route::get('/dashboard', [DasboardController::class, 'index'])
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('dashboard');
 
 Route::middleware(['auth', 'admin'])->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.editadmin');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 
     // User views .............................................................................
     Route::get('/role', [UserController::class, 'index'])->name('roles');
@@ -91,9 +100,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/users/list', [UserController::class, 'index'])->name('list-users');
     Route::get('/users/admins', [UserController::class, 'admin'])->name('list-admins');
     Route::get('/users/{id}', [UserController::class, 'getUser']);
+    Route::get('/admin/permissions/{id}', [UserController::class, 'getUserPermissions']);
     Route::get('/users/history/{id}', [UserController::class, 'userHistory']);
     Route::get('/users/activate/{id}', [UserController::class, 'activate']);
     Route::get('/users/deactivate/{id}', [UserController::class, 'deactivate']);
+    Route::get('/user/make-admin/{id}', [UserController::class, 'makeAdmin']);
+    Route::get('/user/remove-admin/{id}', [UserController::class, 'removeAdmin']);
+    Route::get('/services', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/service/activate/{id}', [ServiceController::class, 'activate']);
+    Route::get('/service/dissable/{id}', [ServiceController::class, 'dissable']);
+
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification.index');
+    Route::get('/notice/delete/{id}', [NotificationController::class, 'delete']);
+    Route::get('/notice/toggle/{id}', [NotificationController::class, 'toggle']);
 
 
 
@@ -114,6 +133,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/create_product', [ProductController::class, 'create'])->name('create_product');
     Route::post('/edit_product', [ProductController::class, 'updateProduct'])->name('edit_product');
+
+    Route::post('/create_notice', [NotificationController::class, 'create'])->name('create_notice');
+    Route::post('/edit_notice', [NotificationController::class, 'update'])->name('edit_notice');
+    Route::post('/create-user-permission', [UserController::class, 'userPermissions'])->name('create-user-permisson');
 });
 
 require __DIR__ . '/auth.php';
