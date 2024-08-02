@@ -113,6 +113,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/notification', [NotificationController::class, 'index'])->name('notification.index');
     Route::get('/notice/delete/{id}', [NotificationController::class, 'delete']);
     Route::get('/notice/toggle/{id}', [NotificationController::class, 'toggle']);
+    Route::get('/profile-visits', [DasboardController::class, 'getProfileVisits']);
 
 
 

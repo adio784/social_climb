@@ -1,4 +1,3 @@
-
 @auth
     @php
         $LoggedUser = Auth::user();
@@ -25,10 +24,12 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-icon.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="shortcut icon" href="{{ asset('images/favicon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/SOCIAL_CLIMB_WHITEBG.png') }}" type="image/x-icon">
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
@@ -68,8 +69,7 @@
                         <p>2024 &copy; Social Climb</p>
                     </div>
                     <div class="float-end">
-                        <p>Developed by: <a
-                                href="http://smartrobtechnologies.com">SmartRob Technologies</a></p>
+                        <p>Developed by: <a href="http://smartrobtechnologies.com">SmartRob Technologies</a></p>
                     </div>
                 </div>
             </footer>
@@ -80,6 +80,7 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
     <script src="{{ asset('js/apexcharts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 
     <script>

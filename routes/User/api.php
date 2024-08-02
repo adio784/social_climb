@@ -3,6 +3,7 @@
 use App\Http\Controllers\AirtimeController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\MonnifyController;
 use App\Http\Controllers\NetworkController;
@@ -79,5 +80,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/validate', [BillController::class, 'validateId'])->name('validate');
     Route::post('/callback', [WebhookController::class, 'handleWebhook'])->name('callback');
     Route::post('/requery/{id}', [WebhookController::class, 'requery'])->name('requery');
+    Route::post('/profilevisits', [DasboardController::class, 'profilevisits']);
 
 });
