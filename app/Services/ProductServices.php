@@ -31,6 +31,11 @@ class ProductServices
         return Product::find($id);
     }
 
+    public function getProductByProductId($id)
+    {
+        return Product::where('product_id', $id)->first();
+    }
+
     public function updateProduct($id, $data)
     {
         return Product::where('id', $id)->update($data);

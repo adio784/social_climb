@@ -21,7 +21,7 @@ class GetfollowerService
 
     public function __construct()
     {
-        $this->apiKey = "v1TpP8WZMsoaEIk3jDdeh30WBxYSveTT";
+        $this->apiKey = "0djpIYyff3FqvlnjcadclAJxSXQdZTuR";
         $this->apiUrl = "https://clientarea.getfollowed.com.ng/api/v1";
     }
 
@@ -85,13 +85,16 @@ class GetfollowerService
     }
 
 
-    public function addOrder(array $data): JsonResponse
+    public function addOrder(array $data)//: JsonResponse
     {
         try {
-            $post = array_merge(['key' => $this->apiKey, 'action' => 'add'], $data);
+            $post = array_merge([
+                'key' => $this->apiKey,
+                'action' => 'add'], $data
+            );
             $result = $this->connect($post);
             $decodedResult = json_decode($result, true);
-            return response()->json($decodedResult);
+            return $decodedResult;//response()->json($decodedResult);
         } catch (Exception $ex) {
             return $this->errorResponse($ex->getMessage(), "Something went wrong", 401);
         }

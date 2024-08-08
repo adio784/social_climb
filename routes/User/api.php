@@ -50,7 +50,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/account-details', [AuthController::class, 'accountdetails'])->name('account-details');
 
     Route::get('/my-orders', [OrderController::class, 'read'])->name('order.list');
-    Route::post('/order', [OrderController::class, 'make'])->name('order');
     Route::get('/orders/{id}', [OrderController::class, 'getOrderById'])->name('order.getbyid');
     Route::get('/order-status/{id}', [OrderController::class, 'status'])->name('status');
     // Route::get('/order-multistatus', [OrderController::class, 'multistatus'])->name('multistatus');
@@ -81,5 +80,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/callback', [WebhookController::class, 'handleWebhook'])->name('callback');
     Route::post('/requery/{id}', [WebhookController::class, 'requery'])->name('requery');
     Route::post('/profilevisits', [DasboardController::class, 'profilevisits']);
+    Route::post('/order', [OrderController::class, 'makeOrder'])->name('order.make');
 
 });
