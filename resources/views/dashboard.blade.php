@@ -7,15 +7,15 @@
     </div>
     <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-lg-11">
                 <div class="row">
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-sm-6 col-lg-3 col-md-3">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="stats-icon purple">
-                                            <i class="iconly-boldShow"></i>
+                                            <i class="fa-solid fa-user"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -26,13 +26,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    {{-- <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="stats-icon blue">
-                                            <i class="iconly-boldProfile"></i>
+                                            <i class="fa-solid fa-wifi"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -42,14 +42,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    </div> --}}
+                    <div class="col-sm-6 col-lg-3 col-md-3">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="stats-icon green">
-                                            <i class="iconly-boldAdd-User"></i>
+                                            <i class="fa-solid fa-palette"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -60,18 +60,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-sm-6 col-lg-3 col-md-3">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="stats-icon red">
-                                            <i class="iconly-boldBookmark"></i>
+                                            <i class="fa-solid fa-cart-shopping"></i>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Order</h6>
                                         <h6 class="font-extrabold mb-0">{{ $order ?? 0 }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6col-lg-3 col-md-3">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="ms-3 name">
+                                        <h6 class="font-bold">{{ Auth::user()->last_name . ' ' . Auth::user()->first_name }}
+                                        </h6>
+                                        <small class="text-muted mb-0">{{ Auth::user()->email }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -86,27 +99,18 @@
                             </div>
                             <div class="card-body">
                                 <canvas id="profileVisitChart"></canvas>
-                                {{-- <div id="chart-profile-visit"></div> --}}
-                                {{--  profileVisitChart  --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-lg-3">
-                <div class="card">
-                    <div class="card-body py-4 px-5">
-                        <div class="d-flex align-items-center">
-                            <div class="avatar avatar-xl">
-                                <img src="{{ asset('images/user.jpeg') }}" alt="Face 1">
-                            </div>
-                            <div class="ms-3 name">
-                                <h5 class="font-bold">{{ Auth::user()->last_name . ' ' . Auth::user()->first_name }}</h5>
-                                <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-md-11 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Recent Orders</h4>
@@ -119,8 +123,14 @@
                                         <img src="{{ asset('images/order.jpeg') }}">
                                     </div>
                                     <div class="name ms-4">
-                                        <h5 class="mb-1">{{ $ord->name }}</h5>
-                                        <h6 class="text-muted mb-0">{{ '@' . $ord->username }}</h6>
+                                        <h6 class="mb-1">{{ $ord->name }}</h6>
+                                        <small class="text-muted mb-0">{{ '@' . $ord->username }}</small>
+                                    </div> &nbsp; |
+                                    <div class="name ms-4">
+                                        <span class="badge @if($ord->status=='success') bg-primary @else bg-danger @endif">{{ $ord->status }}</span>
+                                    </div> &nbsp; |
+                                    <div class="name ms-4">
+                                        {{ $ord->created_at }}
                                     </div>
                                 </div>
                             @endforeach
@@ -131,12 +141,11 @@
                         @endif
 
                         <div class="px-4">
-                            <a href="/history/orders" class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>All
+                            <a href="/history/orders" class='btn btn-primary font-bold mt-3'>All
                                 orders</a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     </div>

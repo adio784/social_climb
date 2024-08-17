@@ -23,6 +23,11 @@ class NotificationController extends Controller
         return view('control.notifications', $data);
     }
 
+    public function getActiveNotice()
+    {
+        return $this->notificationServices->getActiveNotification();
+    }
+
     public function read(Request $request)
     {
         $id = $request->route('id');

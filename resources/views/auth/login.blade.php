@@ -63,12 +63,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendors/bold.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendors/perfect-scrollbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-icon.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/fontawesome/css/all.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/SOCIAL_CLIMB_WHITEBG.png') }}" type="image/x-icon">
 </head>
 
@@ -84,18 +82,19 @@
                     <form method="POST" action="{{ route('login') }}" class="p-2">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="email" class="form-control form-control-xl" placeholder="Email" name="email" value="{{ old('email') }}" required
-                            autofocus autocomplete="username">
+                            <input type="email" class="form-control form-control-xl" placeholder="Email"
+                                name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
                             <div class="form-control-icon">
-                                <i class="bi bi-person"></i>
+                                {{-- <i class="bi bi-person"></i> --}}
+                                <i class="fa-solid fa-user"></i>
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="mt-4" />
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="password" class="form-control form-control-xl" placeholder="Password"  name="password" required
-                            autocomplete="current-password">
+                            <input type="password" class="form-control form-control-xl" placeholder="Password"
+                                name="password" required autocomplete="current-password">
                             <div class="form-control-icon">
-                                <i class="bi bi-shield-lock"></i>
+                                <i class="fa-solid fa-lock"></i>
                             </div>
                             <x-input-error :messages="$errors->get('password')" class="mt-4 mb-4" />
                         </div>
@@ -105,7 +104,9 @@
                                 Keep me logged in
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            Log in</button>
                     </form>
                     <div class="text-center mt-5 text-lg fs-4">
                         <p><a class="font-bold" href="/forgot-password">Forgot password?</a>.</p>
@@ -119,6 +120,8 @@
         </div>
 
     </div>
+
+    <script src="{{ asset('vendors/fontawesome/js/all.min.js') }}"></script>
 </body>
 
 </html>

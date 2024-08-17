@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UserAuthRequest\ActivateAccountRequest;
 use App\Http\Requests\UserAuthRequest\CompletePasswordResetRequest;
@@ -77,12 +78,12 @@ class AuthController extends Controller
         return $this->authService->updateProfile($id, $data);
     }
 
-    public function profileImage(Request $request)
+    public function profileImage(ProfileImageRequest $request)
     {
         $id = auth()->user()->id;
-        $request->validate([
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        // $request->validate([
+        //     'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
         return $this->authService->uploadProfileImage($id, $request->file('profile_image'));
     }
 

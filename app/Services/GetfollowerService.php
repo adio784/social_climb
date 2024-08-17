@@ -21,7 +21,7 @@ class GetfollowerService
 
     public function __construct()
     {
-        $this->apiKey = "0djpIYyff3FqvlnjcadclAJxSXQdZTuR";
+        $this->apiKey = "UG0sVHVyhJHBl2arIABqFjsujdQhh71T";//"0djpIYyff3FqvlnjcadclAJxSXQdZTuR";
         $this->apiUrl = "https://clientarea.getfollowed.com.ng/api/v1";
     }
 

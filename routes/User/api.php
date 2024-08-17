@@ -7,12 +7,14 @@ use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\MonnifyController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\WebhookController;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +73,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-networks', [NetworkController::class, 'getNetwork'])->name('networks');
     Route::get('/get-bill', [BillController::class, 'getBills'])->name('bill');
     Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
+    Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
+    Route::get('/notification', [NotificationController::class, 'getActiveNotice']);
 
     Route::post('/buy-airtime', [AirtimeController::class, 'createVtpassAirtime'])->name('buy-airtime');
     Route::post('/buy-data', [DataController::class, 'createVtpassData'])->name('buy-data');

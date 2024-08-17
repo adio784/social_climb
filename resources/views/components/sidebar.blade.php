@@ -4,7 +4,7 @@
 
         <li class="sidebar-item active ">
             <a href="{{ route('dashboard') }}" class='sidebar-link'>
-                <i class="bi bi-grid-fill"></i>
+                <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
         </li>
@@ -12,7 +12,7 @@
         @if ($permissions->contains('view users'))
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-stack"></i>
+                    <i class="fa-solid fa-user"></i>
                     <span>Users</span>
                 </a>
                 <ul class="submenu ">
@@ -34,7 +34,7 @@
             {{-- History route --}}
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-collection-fill"></i>
+                    <i class="fa-solid fa-layer-group"></i>
                     <span>History</span>
                 </a>
                 <ul class="submenu ">
@@ -64,7 +64,7 @@
         @if ($permissions->contains('view pricings'))
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-grid-1x2-fill"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span>Pricing</span>
                 </a>
                 <ul class="submenu ">
@@ -106,7 +106,7 @@
         @if ($permissions->contains('services') || $permissions->contains('notifications'))
         <li class="sidebar-item  has-sub">
             <a href="#" class='sidebar-link'>
-                <i class="bi bi-hexagon-fill"></i>
+                <i class="fa-solid fa-gear"></i>
                 <span>Settings</span>
             </a>
             <ul class="submenu ">
@@ -125,13 +125,15 @@
         </li>
         @endif
 
+        {{-- Profile route --}}
         <li class="sidebar-item  ">
             <a href="{{ route('profile.edit') }}" class='sidebar-link'>
-                <i class="bi bi-file-earmark-medical-fill"></i>
+                <i class="fa-solid fa-circle-user"></i>
                 <span>Profile</span>
             </a>
         </li>
 
+        {{-- Logout route --}}
         <li class="sidebar-item">
 
             {{-- Authentication --}}
@@ -142,7 +144,7 @@
                     onclick="event.preventDefault();
                                     this.closest('form').submit();"
                     class='sidebar-link'>
-                    <i class="bi bi-pencil"></i>
+                    <i class="fa-solid fa-right-to-bracket"></i>
                     <span>{{ __('Log Out') }}</span>
                 </a>
             </form>

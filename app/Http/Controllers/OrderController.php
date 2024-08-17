@@ -80,9 +80,10 @@ class OrderController extends Controller
             } else {
                 $request = $this->getFollowerService->addOrder(array('service' => $service, 'link' => $link, 'quantity' => $quantity));
                 $data = $request;
+                // return $data;
                 $resStatus = $data['status'];
                 $resOrder = $data['order'];
-                // return $data;
+
                 if ($resStatus == true) {
                     $createOrder = [
                         'user_id'       => Auth::user()->id,
