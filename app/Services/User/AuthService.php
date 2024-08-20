@@ -118,17 +118,19 @@ class AuthService
     }
 
 
-    public function uploadProfileImage($id, UploadedFile $image): JsonResponse
+    public function uploadProfileImage($id, $filePath): JsonResponse
     {
         try {
-            $user = DB::table('users')->where('user_id', $id)->first();
-            $path = 'profile_images';
+            $user = DB::table('users')->where('id', $id)->first();
+
             if ($user->profile_image) {
-                Storage::delete($user->profile_image);
+                Storage::disk('public')->delete($user->profile_image);
             }
-            $filePath = $image->store($path);
-            DB::table('users')->where('user_id', $id)->update(['profile_image' => $filePath]);
+
+            DB::table('users')->where('id', $id)->update(['profile_image' => $filePath]);
+
             return $this->successResponse("Update successful", $user);
+
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
             Log::error($ex->getTraceAsString());

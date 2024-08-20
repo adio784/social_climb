@@ -11,9 +11,12 @@ use App\Http\Requests\UserAuthRequest\LoginRequest;
 use App\Http\Requests\UserAuthRequest\PasswordResetRequest;
 use App\Http\Requests\UserAuthRequest\RegisterRequest;
 use App\Services\User\AuthService;
+use Illuminate\Support\Facades\Storage;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 class AuthController extends Controller
@@ -78,13 +81,78 @@ class AuthController extends Controller
         return $this->authService->updateProfile($id, $data);
     }
 
-    public function profileImage(ProfileImageRequest $request)
+    // public function profileImage(Request $request)
+    // {
+    //     // Validate the uploaded file
+    //     $request->validate([
+    //         'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+    //     $id = auth()->user()->id;
+    //     $user = auth()->user();
+
+    //     // Handle the file upload
+    //     if ($request->hasFile('profile_image')) {
+
+    //         $file = $request->file('profile_image');
+    //         $fileName = time() . '.' . $file->getClientOriginalExtension();
+    //         $filePath = 'profile_images/' . $fileName;
+
+    //         // Store the file
+    //         $file->storeAs('public', $filePath);
+
+    //         // Delete the old profile image if exists
+    //         // if ($user->profile_image) {
+    //             Storage::delete('public/' . $user->profile_image);
+    //         // }
+
+    //         // Update the user's profile image in the database
+    //         // $user->profile_image = $filePath;
+    //         // $user->save();
+    //         return $request->all();
+    //         $this->authService->uploadProfileImage($id, $file);
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Profile image uploaded successfully!',
+    //             'file_path' => $filePath
+    //         ], 200);
+    //     }
+
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'No file uploaded!',
+    //     ], 400);
+    // }
+
+
+    public function profileImage(Request $request)
     {
-        $id = auth()->user()->id;
-        // $request->validate([
-        //     'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
-        return $this->authService->uploadProfileImage($id, $request->file('profile_image'));
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('profile_image')) {
+
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'File received!',
+            //     'file_info' => $request->file('profile_image')->getClientOriginalName(),
+            // ], 200);
+
+            $fileName = Str::uuid() . "." . $request->file("profile_image")->extension();
+            $filePath = $request->file("profile_image")->storeAs("profile_images", $fileName, "public");
+            $id = auth()->user()->id;
+
+            return $this->authService->uploadProfileImage($id, $filePath);
+
+        } else {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'No file uploaded!',
+            ], 400);
+
+        }
     }
 
     public function changePassword(Request $request)

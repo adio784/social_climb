@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::get('/cable-plans', [CableController::class, 'getVtPlans']);
 Route::get('/bill-plans', [BillController::class, 'getVtPlans']);
 
@@ -59,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::put('/edit-profile', [AuthController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password');
-    Route::put('/update-profile-image', [AuthController::class, 'profileImage'])->name('profile.image');
+    Route::post('/update-profile-image', [AuthController::class, 'profileImage']);
 
     Route::get('/products', [ProductController::class, 'products'])->name('products.list');
     Route::get('/products/{id}', [ProductController::class, 'getProductById'])->name('products.getbyid');
@@ -85,5 +86,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/requery/{id}', [WebhookController::class, 'requery'])->name('requery');
     Route::post('/profilevisits', [DasboardController::class, 'profilevisits']);
     Route::post('/order', [OrderController::class, 'makeOrder'])->name('order.make');
-
 });
