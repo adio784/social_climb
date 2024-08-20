@@ -10,13 +10,17 @@ use Illuminate\Notifications\Notification;
 class PasswordResetNotification extends Notification
 {
     use Queueable;
+    protected $user;
+    protected $token;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected $code)
+    public function __construct($user,  $token)
     {
         //
+        $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -32,11 +36,15 @@ class PasswordResetNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
+
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Please reset your password with the below code')
-            ->line($this->code);
+            ->subject('Account Verification')
+            ->view('mail.verification_mail', [
+                'user' => $this->user,
+                'token' => $this->token,
+            ]);
     }
 
     /**

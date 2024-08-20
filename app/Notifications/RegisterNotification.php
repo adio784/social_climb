@@ -11,12 +11,17 @@ class RegisterNotification extends Notification
 {
     use Queueable;
 
+    protected $user;
+    protected $token;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected $user, protected $token)
+    public function __construct($user,  $token)
     {
         //
+        $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -32,13 +37,23 @@ class RegisterNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
+    // public function toMail(object $notifiable): MailMessage
+    // {
+    //     return (new MailMessage)
+    //         ->line('Social Climb')
+    //         // ->action('Notification Action', url('/'))
+    //         ->line('Use the below code to verify your account')
+    //         ->line($this->token);
+    // }
+
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Social Climb')
-            // ->action('Notification Action', url('/'))
-            ->line('Use the below code to verify your account')
-            ->line($this->token);
+            ->subject('Account Verification')
+            ->view('mail.verification_mail', [
+                'user' => $this->user,
+                'token' => $this->token,
+            ]);
     }
 
     /**
