@@ -16,17 +16,16 @@ use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
 class AuthController extends Controller
 {
     use ResponseTrait;
-    public function __construct(protected AuthService $authService)
-    {
-    }
+    public function __construct(protected AuthService $authService) {}
 
-    public function register(RegisterRequest $request)//: JsonResponse
+    public function register(RegisterRequest $request) //: JsonResponse
     {
         return $this->authService->register($request->validated());
     }
@@ -144,14 +143,12 @@ class AuthController extends Controller
             $id = auth()->user()->id;
 
             return $this->authService->uploadProfileImage($id, $filePath);
-
         } else {
 
             return response()->json([
                 'success' => false,
                 'message' => 'No file uploaded!',
             ], 400);
-
         }
     }
 
@@ -162,7 +159,10 @@ class AuthController extends Controller
             'old_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
         ]);
-        return $this->authService->updateProfile($id, $request->all());
+        $data = [
+            'password' => Hash::make($request->new_password),
+        ];
+        return $this->authService->updateProfile($id, $data);
     }
 
     public function wallet()
