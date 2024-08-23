@@ -159,10 +159,7 @@ class AuthController extends Controller
             'old_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
         ]);
-        $data = [
-            'password' => Hash::make($request->new_password),
-        ];
-        return $this->authService->updateProfile($id, $data);
+        return $this->authService->updateProfile($id, $request->all());
     }
 
     public function wallet()

@@ -103,12 +103,21 @@ class AuthService
     public function updateProfile($id, $data): JsonResponse
     {
         try {
-            $updated = DB::table('users')->where('id', $id)->update($data);
-            if ($updated) {
-                $user = DB::table('users')->where('id', $id)->first();
-                return $this->successResponse("Update successful", compact('user'));
+            if(Hash::check($data['old_password'], auth()->user()->password)) {
+
+                if(Hash::check($data['new_password'], auth()->user()->password)) {
+                    return $this->inputErrorResponse("New password cannot be same as old password");
+                } else {
+                    $Data = [ 'password' => Hash::make($data['new_password']) ];
+                    $updated = DB::table('users')->where('id', $id)->update($Data);
+                    if ($updated) {
+                        return $this->successResponse("Update successful");
+                    } else {
+                        return $this->errorResponse("User not found or no changes made");
+                    }
+                }
             } else {
-                return $this->errorResponse("User not found or no changes made");
+                return $this->inputErrorResponse("Incorrect old password");
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
@@ -130,7 +139,6 @@ class AuthService
             DB::table('users')->where('id', $id)->update(['profile_image' => $filePath]);
 
             return $this->successResponse("Update successful", $user);
-
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
             Log::error($ex->getTraceAsString());
