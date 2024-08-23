@@ -63,14 +63,14 @@ class AuthController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        $id = auth()->user()->id;
         $request->validate([
             'first_name'    => 'required|string|max:255',
             'last_name'     => 'required|string|max:255',
             'username'      => 'required|string|max:255',
-            'phone'         => 'required|string|max:15',
+            'phone'         => 'required|max:15|',
             'email'         => 'required|string|email|max:255',
         ]);
+        $id = auth()->user()->id;
         $data = [
             'first_name'    => $request->first_name,
             'last_name'     => $request->last_name,
@@ -167,7 +167,9 @@ class AuthController extends Controller
 
     public function wallet()
     {
-        return $this->authService->wallet();
+        return response()->json([
+            'account_balance' => $this->authService->wallet(),
+        ]);
     }
 
     public function accountdetails()

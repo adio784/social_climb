@@ -55,7 +55,7 @@ class AuthService
             // return $dvaResponse->requestSuccessful;
             if ($dvaResponse->requestSuccessful == true) {
                 $user = $this->user->create($data);
-                $this->createActivation($user);
+                $this->createActivation($user, TokenTypeEnum::EMAIL_VERIFICATION);
                 $accountDetails = $dvaResponse->responseBody->accounts[0];
                 $user->update([
                     'reference' => $dvaResponse->responseBody->accountReference,
@@ -171,7 +171,7 @@ class AuthService
             'type' => $type,
         ]);
         if ($type !== TokenTypeEnum::EMAIL_VERIFICATION) {
-            $user->notify(new PasswordResetNotification($code));
+            $user->notify(new PasswordResetNotification($user, $code));
         } else {
             $user->notify(new RegisterNotification($user, $code));
         }
@@ -396,7 +396,7 @@ class AuthService
                 return false;
             }
 
-            return false;
+            return true;
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
             Log::error($ex->getTraceAsString());

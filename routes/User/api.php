@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('/order-multistatus', [OrderController::class, 'multistatus'])->name('multistatus');
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
-    Route::put('/edit-profile', [AuthController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/edit-profile', [AuthController::class, 'profileUpdate']);
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password');
     Route::post('/update-profile-image', [AuthController::class, 'profileImage']);
 

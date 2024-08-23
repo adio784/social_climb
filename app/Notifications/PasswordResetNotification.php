@@ -40,8 +40,8 @@ class PasswordResetNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Account Verification')
-            ->view('mail.verification_mail', [
+            ->subject('Password Reset')
+            ->view('mail.reset_mail', [
                 'user' => $this->user,
                 'token' => $this->token,
             ]);

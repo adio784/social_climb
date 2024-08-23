@@ -53,7 +53,8 @@ class OrderController extends Controller
     public function read()
     {
         $id = auth()->user()->id;
-        return $this->orderService->getOrderByUser($id);
+        $data = $this->orderService->getOrderByUser($id);
+        return $this->successResponse("Successful", $data);
     }
 
     public function makeOrder(Request $request)
