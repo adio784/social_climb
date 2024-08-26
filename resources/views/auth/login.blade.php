@@ -88,7 +88,7 @@
                                 {{-- <i class="bi bi-person"></i> --}}
                                 <i class="fa-solid fa-user"></i>
                             </div>
-                            <x-input-error :messages="$errors->get('email')" class="mt-4" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-4 text-danger" />
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="password" class="form-control form-control-xl" placeholder="Password"
@@ -96,7 +96,7 @@
                             <div class="form-control-icon">
                                 <i class="fa-solid fa-lock"></i>
                             </div>
-                            <x-input-error :messages="$errors->get('password')" class="mt-4 mb-4" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-4 mb-4 text-danger" />
                         </div>
                         <div class="form-check form-check-lg d-flex align-items-end">
                             <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
