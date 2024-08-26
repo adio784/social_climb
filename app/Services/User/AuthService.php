@@ -89,6 +89,8 @@ class AuthService
             if ($user && $this->checkActivation($user)) {
                 // $token = $user->createToken(config('auth.key'), ['guard' => 'user'])->plainTextToken;
                 $token = $user->createToken('Authentication token')->plainTextToken;
+                $imageUrl = asset('storage/' . $user->profile_image);
+                $user->profile_image = $imageUrl;
                 return $this->successResponse("Login successful", compact('user', 'token'));
             } else {
                 throw new \Exception("Please verify your email");
