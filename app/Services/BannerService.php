@@ -18,7 +18,13 @@ class BannerService
 
     public function getActiveBanners()
     {
-        return Banner::where('status', 1)->orderBy('id', 'desc')->get();
+        $banner = Banner::where('status', 1)->orderBy('id', 'desc')->get();
+        if ($banner->isEmpty()) {
+            return [];
+        }
+        $imageUrl = asset('storage/' . $banner->banner_image);
+        $banner->banner_image = $imageUrl;
+        return $banner;
     }
 
     public function getInactiveBanner()

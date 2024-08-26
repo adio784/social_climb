@@ -54,7 +54,7 @@
                             @foreach ($Banners as $Banner)
                                 <tr>
                                     <td>{{ $Banner->title }}</td>
-                                    <td>{{ $Banner->banner_image }}</td>
+                                    <td><img src="{{ asset('storage/banners/' . $Banner->banner_image) }}" alt="Banner Image"></td>
                                     <td>
                                         <span
                                             class="badge @if ($Banner->status == 1) {{ 'bg-success' }} @else {{ 'bg-danger' }} @endif">{{ Str::ucfirst($Banner->status == 1) ? 'Active' : 'Inactive' }}</span>

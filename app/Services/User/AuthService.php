@@ -234,7 +234,12 @@ class AuthService
     {
         $check = auth('sanctum')->check();
         if ($check) {
-            return auth('sanctum')->user();
+
+            $user = auth('sanctum')->user();
+            $imageUrl = asset('storage/' . $user->profile_image);
+            $user->profile_image = $imageUrl;
+            return $user;
+            // return auth('sanctum')->user();
         }
         return null;
     }
