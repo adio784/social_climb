@@ -23,19 +23,17 @@
                 <div class="card-header">
                     Notifications
                     <a href="{{ route('create_notice') }}" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#createNotice">Create New </a>
+                        data-bs-target="#createNotice">Create New </a>
                 </div>
                 <div id="error_result">
                     @if (Session::get('success'))
-                        <div class="alert alert-success alert-dismissible fade show text-dark"
-                            role="alert">
+                        <div class="alert alert-success alert-dismissible fade show text-dark" role="alert">
                             <strong class="text-white">Success! </strong> <span class="text-white">
                                 {{ Session::get('success') }} </span>
                         </div>
                     @endif
                     @if (Session::get('fail'))
-                        <div class="alert alert-danger text-danger alert-dismissible fade show"
-                            role="alert">
+                        <div class="alert alert-danger text-danger alert-dismissible fade show" role="alert">
                             <strong class="text-white ">Oh Oops! </strong> <span class="text-white">
                                 {{ Session::get('fail') }} </span>
                         </div>
@@ -59,13 +57,14 @@
                                     <td>{{ $Banner->banner_image }}</td>
                                     <td>
                                         <span
-                                            class="badge @if ($Banner->status == 1) {{ 'bg-success' }} @else {{ 'bg-danger' }} @endif">{{ Str::ucfirst($Banner->status ==1) ? 'Active' : 'Inactive' }}</span>
+                                            class="badge @if ($Banner->status == 1) {{ 'bg-success' }} @else {{ 'bg-danger' }} @endif">{{ Str::ucfirst($Banner->status == 1) ? 'Active' : 'Inactive' }}</span>
                                     </td>
                                     <td>
                                         {{ $Banner->created_at }}
                                     </td>
                                     <td>
-                                        <a href="/banner/toggle/{{ $Banner->id }}" class="btn @if ($Banner->status == 1) btn-danger @else btn-success @endif ">
+                                        <a href="/banner/toggle/{{ $Banner->id }}"
+                                            class="btn @if ($Banner->status == 1) btn-danger @else btn-success @endif ">
                                             @if ($Banner->status == 1)
                                                 Disable
                                             @else
@@ -92,12 +91,12 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Notifications </h4>
+                    <h4 class="modal-title" id="myModalLabel33">App Banner </h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
                     </button>
                 </div>
-                <form  method="post" action="{{ route('create_banner') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('create_banner') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -127,5 +126,4 @@
             </div>
         </div>
     </div>
-
 @endsection

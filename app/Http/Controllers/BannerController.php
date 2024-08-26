@@ -39,7 +39,8 @@ class BannerController extends Controller
         try {
             $request->validate([
                 'title' => 'required|string|max:255',
-                'bannerImage' => 'required|mime:png,jpg,jpeg|max:2048'
+                'bannerImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
             ]);
 
             if ($request->hasFile('bannerImage')) {
@@ -69,7 +70,7 @@ class BannerController extends Controller
 
             if ($request->hasFile('bannerImage')) {
                 $request->validate([
-                    'bannerImage' => 'required|mime:png,jpg,jpeg|max:2048'
+                    'bannerImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
                 ]);
                 $id         = $request->id;
                 $fileName   = Str::uuid() . "." . $request->file("bannerImage")->extension();
