@@ -50,6 +50,7 @@ Route::post('/complete-password-reset', [AuthController::class, 'completeResetPa
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('log-out');
     Route::post('/delete-account', [AuthController::class, 'deleteAccount'])->name('delete-account');
+    Route::get('/toggle-mode/{id}', [AuthController::class, 'toggleEmailNotification']);
 
     Route::get('/wallet', [AuthController::class, 'wallet'])->name('wallet-ballance');
     Route::get('/account-details', [AuthController::class, 'accountdetails'])->name('account-details');
@@ -79,8 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
     Route::get('/notification', [NotificationController::class, 'getActiveNotice']);
     Route::get('/banners', [BannerController::class, 'getActiveBanners']);
-    Route::get('/notice-modes', [NotificationModeController::class, 'index']);
-    Route::get('/toggle-mode/{id}', [NotificationModeController::class, 'toggle']);
+    // Route::get('/notice-modes', [NotificationModeController::class, 'index']);
+
 
     Route::post('/buy-airtime', [AirtimeController::class, 'createVtpassAirtime'])->name('buy-airtime');
     Route::post('/buy-data', [DataController::class, 'createVtpassData'])->name('buy-data');

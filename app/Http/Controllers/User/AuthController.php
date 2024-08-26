@@ -10,6 +10,7 @@ use App\Http\Requests\UserAuthRequest\CompletePasswordResetRequest;
 use App\Http\Requests\UserAuthRequest\LoginRequest;
 use App\Http\Requests\UserAuthRequest\PasswordResetRequest;
 use App\Http\Requests\UserAuthRequest\RegisterRequest;
+use App\Models\User;
 use App\Services\User\AuthService;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\ResponseTrait;
@@ -173,6 +174,27 @@ class AuthController extends Controller
     {
         return $this->authService->accountdetails();
     }
+
+    public function toggleEmailNotification(Request $request)
+    {
+        $id = $request->route('id');
+        $user = User::find($id);
+
+        if ($user) {
+            $user->email_notification = !$user->email_notification;
+            $user->save();
+
+            return response()->json([
+                'message' => 'Email notification preference updated successfully.',
+                'email_notification' => $user->email_notification,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'User not found.',
+            ], 404);
+        }
+    }
+
 
     public function logout()
     {
