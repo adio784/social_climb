@@ -103,12 +103,12 @@ class AuthService
     public function updateProfile($id, $data): JsonResponse
     {
         try {
-            if(Hash::check($data['old_password'], auth()->user()->password)) {
+            if (Hash::check($data['old_password'], auth()->user()->password)) {
 
-                if(Hash::check($data['new_password'], auth()->user()->password)) {
+                if (Hash::check($data['new_password'], auth()->user()->password)) {
                     return $this->inputErrorResponse("New password cannot be same as old password");
                 } else {
-                    $Data = [ 'password' => Hash::make($data['new_password']) ];
+                    $Data = ['password' => Hash::make($data['new_password'])];
                     $updated = DB::table('users')->where('id', $id)->update($Data);
                     if ($updated) {
                         return $this->successResponse("Update successful");

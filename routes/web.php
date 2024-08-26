@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AirtimeController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\DasboardController;
@@ -113,6 +114,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/notification', [NotificationController::class, 'index'])->name('notification.index');
     Route::get('/notice/delete/{id}', [NotificationController::class, 'delete']);
     Route::get('/notice/toggle/{id}', [NotificationController::class, 'toggle']);
+
+    Route::get('/banner', [BannerController::class, 'index'])->name('notification.index');
+    Route::get('/banner/delete/{id}', [BannerController::class, 'delete']);
+    Route::get('/banner/toggle/{id}', [BannerController::class, 'toggle']);
     Route::get('/profile-visits', [DasboardController::class, 'getProfileVisits']);
 
 
@@ -137,6 +142,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/create_notice', [NotificationController::class, 'create'])->name('create_notice');
     Route::post('/edit_notice', [NotificationController::class, 'update'])->name('edit_notice');
+
+    Route::post('/create_banner', [BannerController::class, 'create'])->name('create_banner');
+    Route::post('/edit_banner', [BannerController::class, 'update'])->name('edit_banner');
     Route::post('/create-user-permission', [UserController::class, 'userPermissions'])->name('create-user-permisson');
 });
 

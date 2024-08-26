@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\NotificationServices;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 class NotificationController extends Controller
 {
     //
+    use ResponseTrait;
     protected $notificationServices;
     public function __construct(NotificationServices $notificationServices)
     {
@@ -25,7 +27,12 @@ class NotificationController extends Controller
 
     public function getActiveNotice()
     {
-        return $this->notificationServices->getActiveNotification();
+        try {
+            $data = $this->notificationServices->getActiveNotification();
+            return $this->successResponse("Successful", $data);
+        } catch (\Exception $ex) {
+            return $this->inputErrorResponse("Something went wrong", 401);
+        }
     }
 
     public function read(Request $request)

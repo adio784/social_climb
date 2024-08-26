@@ -121,6 +121,12 @@
                         <a href="{{ route('notification.index') }}">Notification</a>
                     </li>
                 @endif
+
+                @if ($permissions->contains('notifications'))
+                    <li class="submenu-item ">
+                        <a href="{{ route('banner.index') }}">Web Banner</a>
+                    </li>
+                @endif
             </ul>
         </li>
         @endif

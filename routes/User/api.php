@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AirtimeController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\DasboardController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\MonnifyController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationModeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\ProductController;
@@ -76,6 +78,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
     Route::get('/get-cable', [CableController::class, 'getCables'])->name('cables');
     Route::get('/notification', [NotificationController::class, 'getActiveNotice']);
+    Route::get('/banners', [BannerController::class, 'getActiveBanners']);
+    Route::get('/notice-modes', [NotificationModeController::class, 'index']);
+    Route::get('/toggle-mode/{id}', [NotificationModeController::class, 'toggle']);
 
     Route::post('/buy-airtime', [AirtimeController::class, 'createVtpassAirtime'])->name('buy-airtime');
     Route::post('/buy-data', [DataController::class, 'createVtpassData'])->name('buy-data');
