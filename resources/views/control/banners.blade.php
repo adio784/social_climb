@@ -53,7 +53,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($Banner as $Banner)
+                            @foreach ($Banners as $Banner)
                                 <tr>
                                     <td>{{ $Banner->title }}</td>
                                     <td>{{ $Banner->banner_image }}</td>
