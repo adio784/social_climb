@@ -47,14 +47,14 @@
                                 <th>Title</th>
                                 <th>Image</th>
                                 <th>Status</th>
-                                <th>Date Joined</th>
+                                <th>Date Created</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($Banners as $Banner)
                                 <tr>
                                     <td>{{ $Banner->title }}</td>
-                                    <td><img src="{{ asset('storage/banners/' . $Banner->banner_image) }}" alt="Banner Image"></td>
+                                    <td><img src="{{ asset('storage/' . $Banner->banner_image) }}" alt="Banner Image"></td>
                                     <td>
                                         <span
                                             class="badge @if ($Banner->status == 1) {{ 'bg-success' }} @else {{ 'bg-danger' }} @endif">{{ Str::ucfirst($Banner->status == 1) ? 'Active' : 'Inactive' }}</span>
