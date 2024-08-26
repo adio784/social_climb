@@ -5,14 +5,14 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Notifications</h3>
+                    <h3>App Banner</h3>
                     <p class="text-subtitle text-muted">View notifications list on the system</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+                            <li class="breadcrumb-item active" aria-current="page">App Banner</li>
                         </ol>
                     </nav>
                 </div>
@@ -54,7 +54,8 @@
                             @foreach ($Banners as $Banner)
                                 <tr>
                                     <td>{{ $Banner->title }}</td>
-                                    <td><img src="{{ asset('storage/' . $Banner->banner_image) }}" alt="Banner Image" class="img-fluid w-25"></td>
+                                    <td><img src="{{ asset('storage/' . $Banner->banner_image) }}" alt="Banner Image"
+                                            class="img-fluid w-25"></td>
                                     <td>
                                         <span
                                             class="badge @if ($Banner->status == 1) {{ 'bg-success' }} @else {{ 'bg-danger' }} @endif">{{ Str::ucfirst($Banner->status == 1) ? 'Active' : 'Inactive' }}</span>
@@ -106,7 +107,8 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label>Message: </label>
+                            <label>Upload Image: <small> Max Size: 2MB, Image Format: jpg, jpeg, png only | Dimensions: 1920
+                                    x 1080 or less </small></label>
                             <div class="form-group">
                                 <input type="file" class="form-control" name="bannerImage"></textarea>
                             </div>

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\BannerService;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class BannerController extends Controller
 {
     //
+    use ResponseTrait;
     protected $bannerServices;
     public function __construct(BannerService $bannerServices)
     {
@@ -24,7 +26,7 @@ class BannerController extends Controller
 
     public function getActiveBanners()
     {
-        return $this->bannerServices->getActiveBanners();
+        return $this->successResponse($this->bannerServices->getActiveBanners());
     }
 
     public function read(Request $request)

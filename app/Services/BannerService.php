@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Banner;
@@ -18,13 +19,18 @@ class BannerService
 
     public function getActiveBanners()
     {
-        $banner = Banner::where('status', 1)->orderBy('id', 'desc')->get();
-        if ($banner->isEmpty()) {
+        $banners = Banner::where('status', 1)->orderBy('id', 'desc')->get();
+        if ($banners->isEmpty()) {
             return [];
+        } else {
+            foreach ($banners as $banner) {
+
+                $imageUrl = asset('storage/' . $banner->banner_image);
+                $banner->banner_image = $imageUrl;
+            }
+
+            return $banners;
         }
-        $imageUrl = asset('storage/' . $banner->banner_image);
-        $banner->banner_image = $imageUrl;
-        return $banner;
     }
 
     public function getInactiveBanner()
